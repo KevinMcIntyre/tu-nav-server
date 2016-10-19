@@ -1,0 +1,17 @@
+{
+	"ImportPath": "github.com/KevinMcIntyre/tu-nav-server",
+	"GoVersion": "go1.6",
+	"GodepVersion": "v74",
+	"Deps": [
+		{
+			"ImportPath": "github.com/codegangsta/negroni",
+			"Comment": "v0.1-70-gc7477ad",
+			"Rev": "c7477ad8e330bef55bf1ebe300cf8aa67c492d1b"
+		},
+		{
+			"ImportPath": "github.com/julienschmidt/httprouter",
+			"Comment": "v1.1-16-gabb0dc9",
+			"Rev": "abb0dc9f755ff0a9d818db28d9d8b9810066e2b5"
+		}
+	]
+}
