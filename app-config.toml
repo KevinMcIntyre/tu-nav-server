@@ -1,0 +1,5 @@
+serverport="7000"
+dbuser="postgres"
+dbpassword="password"
+dbname="tu_nav"
+dbsslmode="disable"
