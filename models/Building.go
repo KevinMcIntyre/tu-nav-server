@@ -6,23 +6,74 @@ import (
 	"fmt"
 	"io"
 	"os"
+	"strconv"
+
+	"github.com/KevinMcIntyre/tu-nav-server/utils"
 )
 
 type Building struct {
-	UID       string `csv:"ID"`
-	Name      string `csv:"NAME"`
-	Latitude  string `csv:"LATITUDE"`
-	Longitude string `csv:"LONGITUDE"`
+	ID          int     `json:"id"`
+	UID         *string `json:"uid,omitempty"`
+	Name        *string `json:"name,omitempty"`
+	Description *string `json:"description,omitempty"`
+	ImageRef    *string `json:"imageRef,omitempty"`
+	Latitude    float64 `json:"lat,omitempty"`
+	Longitude   float64 `json:"long,omitempty"`
+	Address     *string `json:"address,omitempty"`
 }
 
-func parseBuildingsFile(file *os.File) (*[]Building, error) {
+type SeedBuilding struct {
+	UID       string
+	Name      string
+	Latitude  string
+	Longitude string
+}
+
+func GetBuildings(db *sql.DB) (*[]Building, error) {
+	rows, err := db.Query(`
+		SELECT
+		id,
+		uid,
+		name,
+		description,
+		image_ref,
+		longitude,
+		latitude,
+		address
+		FROM buildings
+	`)
+	if err != nil {
+		return nil, err
+	}
+	var buildings []Building
+	defer rows.Close()
+	for rows.Next() {
+		building := new(Building)
+		if err := rows.Scan(
+			&building.ID,
+			&building.UID,
+			&building.Name,
+			&building.Description,
+			&building.ImageRef,
+			&building.Latitude,
+			&building.Longitude,
+			&building.Address,
+		); err != nil {
+			return nil, err
+		}
+		buildings = append(buildings, *building)
+	}
+	return &buildings, nil
+}
+
+func parseBuildingsFile(file *os.File) (*[]SeedBuilding, error) {
 	r := csv.NewReader(file)
 	// Skip the header record
 	_, err := r.Read()
 	if err != nil {
 		return nil, err
 	}
-	var buildings []Building
+	var buildings []SeedBuilding
 	for {
 		record, err := r.Read()
 		if err == io.EOF {
@@ -30,7 +81,7 @@ func parseBuildingsFile(file *os.File) (*[]Building, error) {
 		} else if err != nil {
 			return nil, err
 		}
-		buildings = append(buildings, Building{UID: record[0], Name: record[1], Latitude: record[2], Longitude: record[3]})
+		buildings = append(buildings, SeedBuilding{UID: record[0], Name: record[1], Latitude: record[2], Longitude: record[3]})
 	}
 
 	return &buildings, nil
@@ -46,6 +97,7 @@ func SeedBuildingsFile(db *sql.DB, filePath string) error {
 	if err != nil {
 		return err
 	}
+
 	buildings, err := parseBuildingsFile(buildingsFile)
 	if err != nil {
 		return err
@@ -56,16 +108,34 @@ func SeedBuildingsFile(db *sql.DB, filePath string) error {
 		return err
 	}
 
+	statement, err := transaction.Prepare(`
+		INSERT INTO buildings (uid, name, longitude, latitude)
+		VALUES ($1, $2, $3, $4);
+	`)
+
 	for _, building := range *buildings {
-		transaction.Exec(`
-            INSERT INTO buildings (uid, name, longitude, latitude)
-            VALUES ($1, $2, $3, $4);
-        `, building.UID, building.Name, building.Longitude, building.Latitude)
+		lat, err := strconv.ParseFloat(building.Latitude, 64)
+		if err != nil {
+			fmt.Println("Error parsing latitude for: " + building.Name)
+			return err
+		}
+
+		long, err := strconv.ParseFloat(building.Longitude, 64)
+		if err != nil {
+			fmt.Println("Error parsing longitude for: " + building.Name)
+			return err
+		}
+		buildingUID := sql.NullString{String: building.UID, Valid: !utils.IsEmptyString(building.UID)}
+		buildingName := sql.NullString{String: building.Name, Valid: !utils.IsEmptyString(building.Name)}
+
+		_, err = statement.Exec(buildingUID, buildingName, long, lat)
+		if err != nil {
+			return err
+		}
 	}
 
 	err = transaction.Commit()
 	if err != nil {
-		fmt.Println(err)
 		transaction.Rollback()
 		return err
 	}
@@ -82,5 +152,9 @@ func checkIfBuildingsAreSeeded(db *sql.DB) (bool, error) {
 		return false, err
 	}
 
-	return true, nil
+	if buildingCount > 0 {
+		return true, nil
+	}
+
+	return false, nil
 }

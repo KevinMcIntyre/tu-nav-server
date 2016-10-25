@@ -20,13 +20,16 @@ var db = setupDatabase()
 var config = ReadConfig("./app-config.toml")
 
 func main() {
+	controllers.DB = db
+
 	utils.WritePid()
 	err := models.SeedBuildingsFile(db, config.BuildingsSeedFilePath)
 	if err != nil {
-		log.Println("Error seeding buildings", err)
+		fmt.Println("Error seeding buildings", err)
 	}
 
 	router := httprouter.New()
+	router.GET("/buildings", controllers.BuildingHandler)
 	router.POST("/schedule", controllers.ScheduleHandler)
 
 	n := negroni.New(
