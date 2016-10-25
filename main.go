@@ -10,6 +10,7 @@ import (
 
 	"github.com/BurntSushi/toml"
 	"github.com/KevinMcIntyre/tu-nav-server/controllers"
+	"github.com/KevinMcIntyre/tu-nav-server/models"
 	"github.com/KevinMcIntyre/tu-nav-server/utils"
 	"github.com/codegangsta/negroni"
 	"github.com/julienschmidt/httprouter"
@@ -20,6 +21,10 @@ var config = ReadConfig("./app-config.toml")
 
 func main() {
 	utils.WritePid()
+	err := models.SeedBuildingsFile(db, config.BuildingsSeedFilePath)
+	if err != nil {
+		log.Println("Error seeding buildings", err)
+	}
 
 	router := httprouter.New()
 	router.POST("/schedule", controllers.ScheduleHandler)
@@ -46,11 +51,12 @@ func setupDatabase() *sql.DB {
 }
 
 type Config struct {
-	ServerPort string
-	DBUser     string
-	DBPassword string
-	DBName     string
-	DBSSLMode  string
+	ServerPort            string
+	DBUser                string
+	DBPassword            string
+	DBName                string
+	DBSSLMode             string
+	BuildingsSeedFilePath string
 }
 
 func ReadConfig(configfile string) Config {
