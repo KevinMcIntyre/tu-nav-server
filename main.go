@@ -8,6 +8,7 @@ import (
 
 	_ "github.com/lib/pq"
 
+
 	"github.com/BurntSushi/toml"
 	"github.com/KevinMcIntyre/tu-nav-server/controllers"
 	"github.com/KevinMcIntyre/tu-nav-server/models"
@@ -23,6 +24,7 @@ func main() {
 	controllers.DB = db
 
 	utils.WritePid()
+
 	err := models.SeedBuildingsFile(db, config.BuildingsSeedFilePath)
 	if err != nil {
 		fmt.Println("Error seeding buildings", err)
@@ -31,6 +33,7 @@ func main() {
 	router := httprouter.New()
 	router.GET("/buildings", controllers.BuildingHandler)
 	router.POST("/schedule", controllers.ScheduleHandler)
+	router.GET("/versioncontrol", controllers.VerisonControlHandler)
 
 	n := negroni.New(
 		negroni.NewRecovery(),
