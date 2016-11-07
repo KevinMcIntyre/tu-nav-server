@@ -25,4 +25,9 @@ CREATE table user_search_query (
     query               TEXT,
     building_id         INTEGER                 REFERENCES buildings(id),
     creation_date       TIMESTAMP
+);
+
+CREATE TABLE version_number (
+    id                  BIGSERIAL               PRIMARY KEY,
+    version             DOUBLE PRECISION
 )
