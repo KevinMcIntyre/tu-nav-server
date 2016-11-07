@@ -20,6 +20,18 @@ import (
 var db = setupDatabase()
 var config = ReadConfig("./app-config.toml")
 
+func init() {
+	logFile, err := os.OpenFile("tu-nav-server.log", os.O_RDWR|os.O_CREATE|os.O_APPEND, 0666)
+	if err != nil {
+		fmt.Printf(fmt.Sprintf("Error opening log file: %s \n", err))
+	}
+	defer logFile.Close()
+
+	log.SetOutput(logFile)
+
+	main()
+}
+
 func main() {
 	controllers.DB = db
 
