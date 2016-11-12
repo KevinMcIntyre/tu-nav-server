@@ -5,12 +5,12 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"tu-nav-server/controllers"
 
 	_ "github.com/lib/pq"
 
-
 	"github.com/BurntSushi/toml"
-	"github.com/KevinMcIntyre/tu-nav-server/controllers"
+	//"github.com/KevinMcIntyre/tu-nav-server/controllers"
 	"github.com/KevinMcIntyre/tu-nav-server/models"
 	"github.com/KevinMcIntyre/tu-nav-server/utils"
 	"github.com/codegangsta/negroni"
@@ -46,6 +46,7 @@ func main() {
 	router.GET("/buildings", controllers.BuildingHandler)
 	router.POST("/schedule", controllers.ScheduleHandler)
 	router.GET("/versioncontrol", controllers.VerisonControlHandler)
+	router.GET("/update", controllers.UpdateHandler)
 
 	n := negroni.New(
 		negroni.NewRecovery(),

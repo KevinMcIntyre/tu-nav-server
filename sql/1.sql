@@ -31,3 +31,26 @@ CREATE TABLE version_number (
     id                  BIGSERIAL               PRIMARY KEY,
     version             DOUBLE PRECISION
 )
+
+CREATE TABLE images
+(
+    id                  BIGSERIAL               PRIMARY KEY,
+    name                TEXT                    NOT NULL,
+    zoom                INTEGER                 NOT NULL,
+    lat                 DOUBLE PRECISION        NOT NULL,
+    "long"              DOUBLE PRECISION        NOT NULL,
+    width               INTEGER                 NOT NULL,
+    height              INTEGER                 NOT NULL,
+    image               TEXT                    NOT NULL
+)
+
+CREATE TABLE labels
+(
+    id                  BIGSERIAL               PRIMARY KEY,
+    name                TEXT                    NOT NULL,
+    zoom                INTEGER                 NOT NULL,
+    color               INTEGER                 NOT NULL,
+    size                INTEGER                 NOT NULL,
+    lat                 DOUBLE PRECISION        NOT NULL,
+    "long"              DOUBLE PRECISION        NOT NULL
+)
