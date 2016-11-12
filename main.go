@@ -5,12 +5,11 @@ import (
 	"fmt"
 	"log"
 	"os"
-	"tu-nav-server/controllers"
 
 	_ "github.com/lib/pq"
 
 	"github.com/BurntSushi/toml"
-	//"github.com/KevinMcIntyre/tu-nav-server/controllers"
+	"github.com/KevinMcIntyre/tu-nav-server/controllers"
 	"github.com/KevinMcIntyre/tu-nav-server/models"
 	"github.com/KevinMcIntyre/tu-nav-server/utils"
 	"github.com/codegangsta/negroni"
