@@ -1,0 +1,169 @@
+<html>
+{% include "base.html" %}
+  <body>
+    <!--navbar-->
+   <nav class="navbar navbar-default navbar-default bootsnav main_navigation on no-full stuck">
+     <div class="container">
+       <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+           <span class="icon-bar"></span>
+           <span class="icon-bar"></span>
+           <span class="icon-bar"></span>
+         </button>
+         <a class="navbar-brand" href="#">
+           <img src="public/images/tunav-logo-small.png" alt="logo"></a>
+       </div>
+       <div class="collapse navbar-collapse navbar-right" id="myNavbar">
+         <ul class="nav navbar-nav">
+           <li class="active"><a href="#">TU Nav</a></li>
+           <li><a href="#about">About</a></li>
+           <li><a href="#download">Download</a></li>
+           <li><a href="#contact">Contact Us</a></li>
+         </ul>
+       </div>
+     </div>
+   </nav>
+   <!--/ navbar-->
+   <!--banner-->
+    <div class="banner">
+      <div class="bg-color home_intro_inner">
+        <div class="container">
+          <div class="intro_text_box">
+            <h1 class="wow fadeInDown  animated">TU Nav</h1>
+            <p class="wow fadeInDown  animated">
+              A simple and informative way to navigate Temple University's campus.<br />
+              Available to everyone: students, faculty and guests.
+            </p>
+            <div>
+                <a href="#about" id="learnButton" class="button btn_green_white">Learn More</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--/ banner-->
+    <!--service-->
+    <section id="about" class="section-padding bg-gray">
+      <div class="container">
+        <div class="row">
+          <div class="section-title">
+            <h6>About TU Nav</h6>
+            <h3>Features and Services</h3>
+          </div>
+          <div class="col-md-4 col-sm-6 col-xs-12">
+            <div class="ser-box">
+              <i class="icon-grid"></i>
+              <h5>Design and Finesse</h5>
+              <p>Enhanced Map View Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet.</p>
+            </div>
+          </div>
+          <div class="col-md-4 col-sm-6 col-xs-12">
+            <div class="ser-box">
+              <i class="icon-compass"></i>
+              <h5>Indoor Navigation</h5>
+              <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet.</p>
+            </div>
+          </div>
+          <div class="col-md-4 col-sm-6 col-xs-12">
+            <div class="ser-box">
+              <i class="icon-info"></i>
+              <h5>Schedule Notifier</h5>
+              <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!--/ service-->
+    <!--download-->
+    <section id="download" class="section-padding">
+      <div class="container">
+        <div class="row">
+          <div class="section-title">
+            <h6>Get TU Nav Today</h6>
+            <h3>Download on the Play Store</h3>
+          </div>
+          <div class="col-md-12">
+            <div class="row">
+              <div class="col-md-6">
+                <a href="https://play.google.com/store?hl=en" target="_blank"><img src="public/images/playstore-logo.png" class="img-responsive" alt=""></a>
+              </div>
+              <div class="col-md-6">
+                <span>Android Devices</span>
+                <p>
+                  To download TU Nav on your Android device, go to the <a href="https://play.google.com/store?hl=en" target="_blank">Play Store</a> and search for TU Nav.<br />
+                </p>
+                <b>TU Nav currently only supports Android Devices.</b>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!--/ download-->
+    <!--contact-->
+    <section id="contact" class="section-padding bg-gray">
+      <div class="container">
+        <div class="row">
+          <div class="section-title">
+            <h6>Contact</h6>
+            <h3>Have a question or concern?</h3>
+            <p class="hidden-xs">If you have any questions or concerns regarding TU Nav feel free to contact us.<br />Your message will be sent to the developers of TU Nav.</p>
+          </div>
+          <div class="contact-form">
+            <form action="mailto:tuf06129@temple.edu,tue97785@temple.edu,tuf75424@temple.edu,tuc41920@temple.edu,tud27246@temple.edu" method="post" enctype="text/plain">
+            <div class="col-md-6">
+              <input class="av-input" name="name" id="name" placeholder="Name" type="text">
+            </div>
+            <div class="col-md-6">
+              <input class="av-input" name="name" id="name" placeholder="Email" type="email">
+            </div>
+            <div class="col-md-6">
+              <input class="av-input" name="name" id="name" placeholder="Phone" type="text">
+            </div>
+            <div class="col-md-6">
+              <input class="av-input" name="name" id="name" placeholder="Subject" type="text">
+            </div>
+            <div class="col-md-12">
+              <textarea class="av-input" name="message" id="essage" cols="30" rows="4" placeholder="Message"></textarea>
+            </div>
+            <div class="col-md-12 btn-content">
+              <p>
+                <button class="av-submit" type="submit">send message <i class="icon-paper-plane"></i> </button>
+              </p>
+            </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!--/ contact-->
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+   <!-- Include all compiled plugins (below), or include individual files as needed -->
+   <script src="js/bootstrap.min.js"></script>
+   <script>
+     $(document).ready(function(){
+       // Add smooth scrolling to all links in navbar + footer link
+       $(".navbar a, footer a[href='#myPage'], .overlay-detail a, #learnButton").on('click', function(event) {
+
+       // Prevent default anchor click behavior
+       event.preventDefault();
+
+       // Store hash
+       var hash = this.hash;
+
+       // Using jQuery's animate() method to add smooth page scroll
+       // The optional number (900) specifies the number of milliseconds it takes to scroll to the specified area
+       $('html, body').animate({
+         scrollTop: $(hash).offset().top
+       }, 900, function(){
+
+         // Add hash (#) to URL when done scrolling (default click behavior)
+         window.location.hash = hash;
+         });
+       });
+     })
+     </script>
+  </body>
+</html>

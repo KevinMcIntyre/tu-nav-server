@@ -4,9 +4,10 @@ import (
 	"database/sql"
 	"fmt"
 	"log"
+	"net/http"
 	"os"
 
-	_ "github.com/lib/pq"
+	//"tu-nav-server/controllers"
 
 	"github.com/BurntSushi/toml"
 	"github.com/KevinMcIntyre/tu-nav-server/controllers"
@@ -42,15 +43,18 @@ func main() {
 	}
 
 	router := httprouter.New()
+	router.GET("/", controllers.HomeHandler)
 	router.GET("/buildings", controllers.BuildingHandler)
 	router.POST("/schedule", controllers.ScheduleHandler)
 	router.GET("/versioncontrol", controllers.VerisonControlHandler)
 	router.GET("/update", controllers.UpdateHandler)
+	router.ServeFiles("/public/*filepath", http.Dir("/Users/Eric/go/src/tu-nav-server/public"))
 
 	n := negroni.New(
 		negroni.NewRecovery(),
 	)
 
+	// n.Use(negroni.NewStatic(http.Dir("/public")))
 	n.UseHandler(router)
 	n.Run(":" + config.ServerPort)
 }
