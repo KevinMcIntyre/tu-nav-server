@@ -9,7 +9,8 @@ CREATE TABLE buildings (
     image_ref           TEXT,
     longitude           DOUBLE PRECISION        NOT NULL,
     latitude            DOUBLE PRECISION,
-    address             TEXT
+    address             TEXT,
+    indoorID            TEXT
 );
 
 CREATE TABLE rooms (

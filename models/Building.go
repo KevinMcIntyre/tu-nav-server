@@ -20,6 +20,7 @@ type Building struct {
 	Latitude    float64 `json:"lat,omitempty"`
 	Longitude   float64 `json:"long,omitempty"`
 	Address     *string `json:"address,omitempty"`
+	IndoorID    *string `json:"indoorID,omitempty"`
 }
 
 type SeedBuilding struct {
@@ -39,7 +40,8 @@ func GetBuildings(db *sql.DB) (*[]Building, error) {
 		image_ref,
 		longitude,
 		latitude,
-		address
+		address,
+		indoorid
 		FROM buildings
 	`)
 	if err != nil {
@@ -58,6 +60,7 @@ func GetBuildings(db *sql.DB) (*[]Building, error) {
 			&building.Latitude,
 			&building.Longitude,
 			&building.Address,
+			&building.IndoorID,
 		); err != nil {
 			return nil, err
 		}
