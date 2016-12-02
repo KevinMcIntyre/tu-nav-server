@@ -42,7 +42,7 @@ func GetBuildings(db *sql.DB) (*[]Building, error) {
 		latitude,
 		address,
 		indoorid
-		FROM buildings
+		FROM buildings ORDER BY id
 	`)
 	if err != nil {
 		return nil, err
